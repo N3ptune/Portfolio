@@ -8,3 +8,5 @@ Webcrawler is a program that takes in a link, and either strips the link to the 
 Webscraper is a very basic webscraping program to pull grouped data off of a website and write it to an exported excel table.
 
 DS and A is a group of various data structure classes I wrote, as well as a couple of sorting algorithms, in C++.
+
+Wedding Project has a program that I used to grab addresses off of an I Need Your Address link, and gives mailable addresses. The other program was used to quickly write and format thank you notes that can be personalized by person, gift, adjectives, and a special note.
