@@ -20,6 +20,7 @@ from src.project1.fsm import (
 )
 from src.project1.token import Token
 
+# Defines tests for all off the tokens, with pass and fail cases.
 
 class TestColon:
     def test_given_non_colon_when_run_then_reject(self):
