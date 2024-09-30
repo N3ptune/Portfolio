@@ -7,6 +7,7 @@ from LinkValidator import LinkValidator
 import shutil
 import image_processing
 
+# Creates a that will be marked as visited and then written to a file
 
 def construct_url(base_url, relative_url):
     if base_url.endswith('/'):
@@ -17,9 +18,9 @@ def construct_url(base_url, relative_url):
     else:
         return '/'.join(base_url.split('/')[:-1]) + '/' + relative_url
 
+# Returns the list of paths to exclude from the domain's robots.txt file
 
 def parse_robots(domain_name):
-    """Returns the list of paths to exclude from domain_name's robots.txt file."""
     domain = domain_name.split('//') if '//' in domain_name else domain_name
     sections = domain[1].split('/')
     base_domain = f'{domain[0]}//{sections[0]}'
@@ -28,6 +29,7 @@ def parse_robots(domain_name):
     forbidden_stuff = re.findall(r"Disallow: (.*)", response_obj.text)
     return forbidden_stuff
 
+# Checks to make sure that the command line input is properly formatted
 
 def validate_commands(args):
     if args[0] in ['-c', '-p']:
@@ -40,6 +42,7 @@ def validate_commands(args):
     else:
         raise IndexError(f'{args[0]} is an invalid arguments.\nValid arguments for this project are:\n-c\n-p\n-i\nPLease choose a valid command from the provided above.')
 
+# Proccesses the link to get a link for each element in robots.txt
 
 def process(link_validator, current_url, link):
     if link is not None:
@@ -56,6 +59,7 @@ def process(link_validator, current_url, link):
     else:
         raise TypeError('The "link" variable is None. Please remedy this.')
 
+# Counts how many unique links have been visited
 
 def counting_links(start_url, output_1, output_2):
     visited = {}
@@ -93,6 +97,7 @@ def counting_links(start_url, output_1, output_2):
         for i in range(len(counts)):
             file.write(f"{bin_edges[i]:.1f},{counts[i]:.1f}\n")
 
+# Code to grab tables off of a page, and then write them correctly to a file
 
 def table_stuff(url, outfile_1, outfile_2):
     page = requests.get(url)
@@ -120,6 +125,8 @@ def table_stuff(url, outfile_1, outfile_2):
             row.extend(str(y[i]) for y in y_axis)
             file.write(','.join(row) + '\n')
 
+# Code to grab images off of a page, apply a filter, and then write to a file
+# Args -> -s: apply sepia filter, -g: apply grayscale filter, -f: flip upside down, -m: mirror the image
 
 def image_stuff(url, outfile_prefix, filter):
     page = requests.get(url)
@@ -149,6 +156,8 @@ def image_stuff(url, outfile_prefix, filter):
         else:
             raise IndexError('Invalid operation. Valid Operations are:\n-s\n-g\-f\-m\nPlease choose a valid operation from the list provided.')
 
+# Checks to see which program it will run
+# Args -> -c: robots.txt link counter, -p: grab and write tables from a link, -i: grab and apply a filter to images
 
 def main(args):
     if validate_commands(args[1:]):
