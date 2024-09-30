@@ -39,18 +39,6 @@ TokenType = Literal[
     "STRING",
     "WHITESPACE",
 ]
-"""
-`TokenType` is an algebraic data type, and more specifically, it is a
-"sum type". A sum type is a list of allowed types, or in this case,
-allowed string literals that belong to `TokenType`. The mypy tool uses
-`TokenType` to statically check that the string indicating the type of
-token to create belongs to the `TokenType` sum type. `TokenType`
-includes all the allowed syntactic types for the Datalog grammar.
-
-For more on algebraic types in Python see
-https://threeofwands.com/algebraic-data-types-in-python/
-"""
-
 
 class Token:
     """Token class for Datalog.
