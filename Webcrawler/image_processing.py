@@ -1,12 +1,14 @@
 from byuimage import Image
 import sys
 
+# Shows the image after it has been altered
 
 def show_image(args, file):
     if validate_commands(args[1:]):
         Image(file).show()
     return
 
+# Creates a collage of 4 images attached to a new blank image
 
 def collage(args, file1, file2, file3, file4, output_file, weight):
     old_image1 = Image(file1)
@@ -54,6 +56,7 @@ def collage(args, file1, file2, file3, file4, output_file, weight):
     collage_image.save(output_file)
     return collage_image
 
+# Mirrors the image
 
 def mirrored(filename, output_file):
     old_image = Image(filename)
@@ -69,6 +72,7 @@ def mirrored(filename, output_file):
     new_image.save(output_file)
     return new_image
 
+# Flips the image upside down
 
 def flipped(filename, output_file):
     flipped_image = Image(filename)
@@ -84,6 +88,7 @@ def flipped(filename, output_file):
     new_image.save(output_file)
     return new_image
 
+# Makes borders on the edge of the image the size of weight
 
 def make_borders(args, filename, output_file, weight, red, green, blue):
     old_image = Image(filename)
@@ -104,6 +109,7 @@ def make_borders(args, filename, output_file, weight, red, green, blue):
     bordered_image.save(output_file)
     return bordered_image
 
+# Applies a grayscale filter
 
 def grayscale(filename, output_file):
     old_image = Image(filename)
@@ -119,6 +125,7 @@ def grayscale(filename, output_file):
     new_image.save(output_file)
     return new_image
 
+# Applies a sepia filter
 
 def sepia(filename, output_file):
         sepia_image = Image(filename)
@@ -132,6 +139,7 @@ def sepia(filename, output_file):
         sepia_image.save(output_file)
         return sepia_image
 
+# Darkens the image
 
 def darken(args, filename, output_file, percent):
     if validate_commands(args[1:]):
@@ -143,6 +151,7 @@ def darken(args, filename, output_file, percent):
         darken_image.save(output_file)
         return darken_image
 
+# Makes sure that the command line inputs are valid
 
 def validate_commands(args):
     if args[0] == '-d':
@@ -152,6 +161,7 @@ def validate_commands(args):
     if args[0] in ['-s', '-g', '-b', '-f', '-m', '-c', '-y']:
         return True
 
+# Sees if the pixel in question is green
 
 def detect_green(pixel, threshold, factor):
     factor = float(factor)
@@ -162,6 +172,7 @@ def detect_green(pixel, threshold, factor):
     else:
         return False
 
+# Code to apply green screen
 
 def green_screen(foreground, background, threshold, factor):
     final = Image.blank(background.width, background.height)
@@ -183,6 +194,7 @@ def green_screen(foreground, background, threshold, factor):
                 np.blue = fp.blue
     return final
 
+# Runs the program based off of the command line inputs
 
 def main(args):
     if validate_commands(args[1:]):
@@ -205,7 +217,7 @@ def main(args):
         if args[1] == '-y':
             green_screen_it(args, args[2], args[3], args[4], args[5], args[6]).show()
 
-
+# Applies the green screen
 def green_screen_it(args, foreground, background, output, threshold, factor):
     foreground_img = Image(foreground)
     background_img = Image(background)
